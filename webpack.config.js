@@ -1,5 +1,5 @@
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
@@ -9,8 +9,8 @@ module.exports = {
   },
   output: {
     // filename: "[name].[hash].js"
-    // filename: "[name].[chunkhash].js"
-    filename: "[name].[contenthash].js"
+    filename: "[name].[chunkhash].js"
+    // filename: "[name].[contenthash].js"
   },
   module: {
     rules: [
@@ -20,10 +20,12 @@ module.exports = {
       // },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          "css-loader"
+        ]
       },
       {
         test: /\.js|jsx$/,
@@ -34,8 +36,8 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new ExtractTextPlugin({
-      filename: "[name].[contenthash].css"
+    new MiniCssExtractPlugin({
+      filename: "[name].[chunkhash].css"
     })
   ]
 };
