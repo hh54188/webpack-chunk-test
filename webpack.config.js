@@ -8,16 +8,10 @@ module.exports = {
     vendor: "./src/vendor.js"
   },
   output: {
-    // filename: "[name].[hash].js"
     filename: "[name].[chunkhash].js"
-    // filename: "[name].[contenthash].js"
   },
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   loaders: ["style-loader", "css-loader"]
-      // },
       {
         test: /\.css$/,
         use: [
@@ -34,10 +28,15 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all"
+    }
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].[chunkhash].css"
+      filename: "[name].[contenthash].css"
     })
   ]
 };
